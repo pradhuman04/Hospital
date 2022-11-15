@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2022-11-15
+  doctor: one
+  patient: 
+  slot: one
+
+two:
+  date: 2022-11-15
+  doctor: two
+  patient: 
+  slot: two
