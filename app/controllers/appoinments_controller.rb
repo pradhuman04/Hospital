@@ -1,6 +1,7 @@
 class AppoinmentsController < ApplicationController
   def index
-    @appoinments = current_user.future_appoinments
+    # @appoinments = current_user.future_appoinments
+    @appoinment = Appoinment.all
   end
   
   def new 

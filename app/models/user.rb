@@ -19,10 +19,10 @@ class User < ApplicationRecord
             length: { minimum:2, maximum:15 },
             format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
-  validates :email,
-            presence: true,
-            uniqueness: true,
-            format: { with: EMAIL_REGEX, message: 'check e-mail format (abc123@example.com)' }
+  # validates :email,
+  #           presence: true,
+  #           uniqueness: true,
+  #           format: { with: EMAIL_REGEX, message: 'check e-mail format (abc123@example.com)' }
 
   validates :password,
             presence:true,
@@ -41,11 +41,11 @@ class User < ApplicationRecord
   def future_appoinments
     result = patient_appoinments.future.include(:patient) if doctor?
     result = doctor_appoinments.future.include(:doctor) if patient?
-    result
+    
   end
   private
 
-  def validate_birth_date
-    errors.add(:date_of_birth, "please put a valid date")if date_of_birth > Time.now
+  def validate_birth_date 
+    errors.add(:date_of_birth, "please put a valid date") if date_of_birth > Time.now
   end
 end
