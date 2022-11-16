@@ -4,6 +4,7 @@
   <%= render "users/shared/error_messages", resource: resource %>
 
   <div>
+  
      <%= f.label :first_name %><br />
      <%= f.text_field :first_name, autofocus: true %>
   </div>
@@ -14,17 +15,22 @@
   </div>
 
   <div>
-     <%= f.label :first_name %><br />
-     <%= f.text_field :gender, autofocus: true %>
+  <b>Gender</b><br />
+  <%= f.radio_button :gender, 'male' %> male<br />
+  <%= f.radio_button :gender, 'female' %> female<br />
+  <%= f.radio_button :gender, 'others' %> others<br />
   </div>
 
   <div>
      <%= f.label :date_of_birth %><br />
      <%= f.date_field :date_of_birth, autofocus: true %>
   </div>
+  
   <div>
-     <%= f.label :role %><br />
-     <%= f.number_field :role, autofocus: true %>
+  <b>Role</b><br />
+  <%= f.radio_button :role, 'patient' %> patient<br />
+  <%= f.radio_button :role, 'doctor' %> doctor<br />
+  
   </div>
 
   <div class="field">
