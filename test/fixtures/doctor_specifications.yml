@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  specialization: MyString
+  institute_name: MyString
+  practicing_from: 2022-11-17 16:38:59
+  clinic_address: MyString
+
+two:
+  specialization: MyString
+  institute_name: MyString
+  practicing_from: 2022-11-17 16:38:59
+  clinic_address: MyString

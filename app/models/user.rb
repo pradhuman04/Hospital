@@ -4,32 +4,42 @@ class User < ApplicationRecord
 
   NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  
-  has_many :patient_appoinments, class_name: "Appoinment", foreign_key: :doctor_id, dependent: :destroy
-  has_many :doctor_appoinments, class_name: "Appoinment", foreign_key: :patient_id, dependent: :destroy
-  has_many :notes, dependent: :destroy
+
+  # before_create do
+  #   self.role = if ('role = :user_role', user_role: User.roles[:doctor])
+  # end
 
   validates :first_name,
-            presence: true,
-            length: { minimum:2, maximum:15},
-            format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  presence: true,
+  length: { minimum:2, maximum:15},
+  format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
- validates :last_name,
-            presence: true,
-            length: { minimum:2, maximum:15 },
-            format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  validates :last_name,
+    presence: true,
+    length: { minimum:2, maximum:15 },
+    format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
   # validates :email,
   #           presence: true,
   #           uniqueness: true,
   #           format: { with: EMAIL_REGEX, message: 'check e-mail format (abc123@example.com)' }
 
-  validates :password,
-            presence:true,
-            length: { minimum:6, maximum:20 }     
-            
+  # validates :password,
+  #   presence:true,
+  #   length: { minimum:6, maximum:20 }     
+    
   validates_confirmation_of :password
   validate  :validate_birth_date
+  
+  has_many :patient_appoinments, class_name: "Appoinment", foreign_key: :doctor_id, dependent: :destroy
+
+  has_many :doctor_appoinments, class_name: "Appoinment", foreign_key: :patient_id, dependent: :destroy
+
+  has_many :doctor_doctor_specifications, class_name: "DoctorSpecification", foreign_key: :patient_id, dependent: :destroy
+   
+  has_many :notes, dependent: :destroy
+
+
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -38,10 +48,15 @@ class User < ApplicationRecord
 
   scope :get_all_doctors, -> { (select('id, first_name').where('role = :user_role', user_role: User.roles[:doctor])) }
 
+  def future
+    where('status = :pending OR status = :cancelled', pending: Appoinment.statuses[:pending],     cancelled: Appoinment.statuses[:cancelled])
+  end
+
+
   def future_appoinments
     result = patient_appoinments.future.include(:patient) if doctor?
     result = doctor_appoinments.future.include(:doctor) if patient?
-    
+  
   end
   private
 
