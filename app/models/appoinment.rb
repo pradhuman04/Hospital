@@ -1,10 +1,18 @@
 class Appoinment < ApplicationRecord
 
+  validates :date, presence: true
+  validates :doctor_id, presence: true
+  validates :patient_id, presence: true
+  validate  :validate_appoinment_date
+
   enum status: [:pending, :unvisited, :cancelled, :visited]
 
-  belongs_to :doctor, class_name: :"user", foreign_key: 'patient_id'
+  # belongs_to :doctor, class_name: :"user", foreign_key: 'doctor_id'
 
-  belongs_to :patient, class_name: :"user", foreign_key: 'doctor_id'
+
+  # belongs_to :patient, class_name: :"user", foreign_key: 'patient_id'
+
+  belongs_to :user
 
   belongs_to :time_slot
   

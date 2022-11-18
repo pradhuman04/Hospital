@@ -8,36 +8,38 @@
      <%= f.label :first_name %><br />
      <%= f.text_field :first_name, autofocus: true %>
   </div>
-
+  <br>
   <div>
      <%= f.label :last_name %><br />
      <%= f.text_field :last_name, autofocus: true %>
   </div>
-
+  <br>
   <div>
   <b>Gender</b><br />
-  <%= f.radio_button :gender, 'male' %> male<br />
-  <%= f.radio_button :gender, 'female' %> female<br />
-  <%= f.radio_button :gender, 'others' %> others<br />
+  <%= f.radio_button :gender, 'male' %> male
+  <%= f.radio_button :gender, 'female' %> female
+  <%= f.radio_button :gender, 'others' %> others
   </div>
-
+  <br>
   <div>
      <%= f.label :date_of_birth %><br />
      <%= f.date_field :date_of_birth, autofocus: true %>
   </div>
-  
+  <br>
   <div>
   <b>Role</b><br />
-  <%= f.radio_button :role, 'patient' %> patient<br />
-  <%= f.radio_button :role, 'doctor' %> doctor<br />
+  <%= f.radio_button :role, 'patient' %> patient
+  <%= f.radio_button :role, 'doctor' %> doctor
   
   </div>
+
+  <br>
 
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
-
+  <br>
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
@@ -45,16 +47,16 @@
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
-
+  <br>
   <div class="field">
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
-  
+  <br>
 
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
-
+<br>
 <%= render "users/shared/links" %>

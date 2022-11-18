@@ -2,6 +2,9 @@ class User < ApplicationRecord
   enum role: [:patient, :doctor]
   enum gender: [:male, :female, :others]
 
+  self.inheritance_column = :user_type
+  
+
   NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
@@ -27,12 +30,16 @@ class User < ApplicationRecord
   validates_confirmation_of :password
   validate  :validate_birth_date
   
-  has_many :patient_appoinments, class_name: "Appoinment", foreign_key: :doctor_id, dependent: :destroy
+  # has_many :patient_appoinments, class_name: "Appoinment", foreign_key: :doctor_id, dependent: :destroy
 
-  has_many :doctor_appoinments, class_name: "Appoinment", foreign_key: :patient_id, dependent: :destroy
+  # has_many :doctor_appoinments, class_name: "Appoinment", foreign_key: :patient_id, dependent: :destroy
 
-  has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :patient_id, dependent: :destroy
-   
+  # has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
+
+  has_many :appoinments, dependent: :destroy
+
+  has_many :appoinments, dependent: :destroy 
+
   has_many :notes, dependent: :destroy
 
 
@@ -53,6 +60,13 @@ class User < ApplicationRecord
     result = patient_appoinments.future.include(:patient) if doctor?
     result = doctor_appoinments.future.include(:doctor) if patient?
   
+  end
+
+  def patient?
+    type == 'Patient'
+  end
+  def doctor?
+    type == 'Doctor'
   end
   private
 

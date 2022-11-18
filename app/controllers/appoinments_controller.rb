@@ -33,7 +33,7 @@ class AppoinmentsController < ApplicationController
     end
     if @appoinment.save
       redirect_to root_path, notice: 'Appoinment saved!'
-    elserender 'new', notice: 'Unable to create Appoinment, try again!'
+    else render 'new', notice: 'Unable to create Appoinment, try again!'
     end
   end
 
