@@ -1,5 +1,7 @@
   Rails.application.routes.draw do
-  get 'doctor_specifications/index'
+  
+
+  resource :doctor_specifications
 
   root 'appoinments#index'
 

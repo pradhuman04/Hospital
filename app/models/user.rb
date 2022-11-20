@@ -30,15 +30,14 @@ class User < ApplicationRecord
   validates_confirmation_of :password
   validate  :validate_birth_date
   
-  # has_many :patient_appoinments, class_name: "Appoinment", foreign_key: :doctor_id, dependent: :destroy
+  has_many :patient_appoinments, class_name: "Appoinment", foreign_key: :doctor_id, dependent: :destroy
 
-  # has_many :doctor_appoinments, class_name: "Appoinment", foreign_key: :patient_id, dependent: :destroy
+  has_many :doctor_appoinments, class_name: "Appoinment", foreign_key: :patient_id, dependent: :destroy
 
-  # has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
+  has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
 
   has_many :appoinments, dependent: :destroy
-
-  has_many :appoinments, dependent: :destroy 
+ 
 
   has_many :notes, dependent: :destroy
 
@@ -55,19 +54,23 @@ class User < ApplicationRecord
     where('status = :pending OR status = :cancelled', pending: Appoinment.statuses[:pending],cancelled: Appoinment.statuses[:cancelled])
   end
 
+  def past
+    where('status <> :pending', pending: Appointment.statuses[:pending]).order("date ASC")
+  end
+
 
   def future_appoinments
     result = patient_appoinments.future.include(:patient) if doctor?
     result = doctor_appoinments.future.include(:doctor) if patient?
   
   end
+  def past_appointments
+    result = patient_appointments.past.includes(:patient) if doctor?
+    result = doctor_appointments.past.includes(:doctor) if patient?
+    result
+  end
 
-  def patient?
-    type == 'Patient'
-  end
-  def doctor?
-    type == 'Doctor'
-  end
+
   private
 
   def validate_birth_date 

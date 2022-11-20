@@ -2,7 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
 
-  before_action :configure_permitted_parameters
+  
 
   private
 
@@ -10,8 +10,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:first_name,:last_name,:gender,:date_of_birth,:role,:email,:password,:password_confirmation,:type)
   end
   
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[type])
+  def account_update_params
+    params.require(:user).permit(:first_name,:last_name,:gender,:date_of_birth,:role,:email,:password,:password_confirmation,:current_password, :image)
   end
 
 
