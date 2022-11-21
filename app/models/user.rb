@@ -2,7 +2,7 @@ class User < ApplicationRecord
   enum role: [:patient, :doctor]
   enum gender: [:male, :female, :others]
 
-  self.inheritance_column = :user_type
+  # self.inheritance_column = :user_type
   
 
   NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
@@ -27,16 +27,34 @@ class User < ApplicationRecord
   #   presence:true,
   #   length: { minimum:6, maximum:20 }     
     
-  validates_confirmation_of :password
+  
   validate  :validate_birth_date
   
-  has_many :patient_appoinments, class_name: "Appoinment", foreign_key: :doctor_id, dependent: :destroy
+  has_many :patient_appointments, class_name: "Appointment", foreign_key: :doctor_id, dependent: :destroy do
+    def future
+      where('status = :pending OR status = :cancelled', pending: Appointment.statuses[:pending],
+                      cancelled: Appointment.statuses[:cancelled]).order("date ASC")
+    end
+    def past
+      where('status <> :pending', pending: Appointment.statuses[:pending]).order("date ASC")
+    end
+  end
 
-  has_many :doctor_appoinments, class_name: "Appoinment", foreign_key: :patient_id, dependent: :destroy
+  
 
-  has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
+  has_many :doctor_appointments, class_name: "Appointment", foreign_key: :patient_id, dependent: :destroy do
+    def future
+      where('status = :pending OR status = :cancelled', pending: Appointment.statuses[:pending],
+                      cancelled: Appointment.statuses[:cancelled]).order("date ASC")
+    end
+    def past
+      where('status <> :pending', pending: Appointment.statuses[:pending]).order("date ASC")
+    end
+  end
 
-  has_many :appoinments, dependent: :destroy
+  # has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
+
+  # has_many :appointments, dependent: :destroy
  
 
   has_many :notes, dependent: :destroy
@@ -50,24 +68,22 @@ class User < ApplicationRecord
 
   scope :get_all_doctors, -> { (select('id, first_name').where('role = :user_role', user_role: User.roles[:doctor])) }
 
-  def future
-    where('status = :pending OR status = :cancelled', pending: Appoinment.statuses[:pending],cancelled: Appoinment.statuses[:cancelled])
-  end
+
 
   def past
     where('status <> :pending', pending: Appointment.statuses[:pending]).order("date ASC")
   end
 
 
-  def future_appoinments
-    result = patient_appoinments.future.include(:patient) if doctor?
-    result = doctor_appoinments.future.include(:doctor) if patient?
+  def future_appointments
+    result = patient_appointments.future.includes(:patient) if doctor?
+    result = doctor_appointments.future.includes(:doctor) if patient?
   
   end
   def past_appointments
     result = patient_appointments.past.includes(:patient) if doctor?
     result = doctor_appointments.past.includes(:doctor) if patient?
-    result
+    
   end
 
 

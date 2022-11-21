@@ -1,4 +1,4 @@
-class Appoinment < ApplicationRecord
+class Appointment < ApplicationRecord
 
   validates :date, presence: true
   validates :doctor_id, presence: true

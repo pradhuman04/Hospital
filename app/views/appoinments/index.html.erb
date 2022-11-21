@@ -1,2 +1,34 @@
-<h1>Appoinments#index</h1>
-<p>hello</p>
+<%= form_for :appointment do |f| %>
+
+    <% if @appointments.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@appointments.errors.count, "error") %> prohibited
+        this appointment from being saved:
+     </h2>
+     <ul>
+       <% @appointments.errors.full_messages.each do |msg| %>
+         <li><%= msg %></li>
+       <% end %>
+     </ul>
+   </div>
+ <% end %>
+
+   <div>
+    <%= f.label :date %><br />
+    <%= f.date_field :date, autofocus: true %>
+   </div>
+
+   <div>
+   <b>Status</b><br />
+   <%= f.radio_button :status, 'visited' %> visited
+   <%= f.radio_button :status, 'pending' %> pending
+   <%= f.radio_button :status, 'unvisited' %> unvisited
+   <%= f.radio_button :status, 'cancelled' %> cancelled
+   
+   </div>
+   
+     <p>
+       <%= f.submit %>
+     </p>
+  <% end %>
