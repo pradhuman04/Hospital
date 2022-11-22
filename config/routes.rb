@@ -1,14 +1,14 @@
   Rails.application.routes.draw do
   
-  #   resource :doctor_specifications
-  # post 'doctor_specifications/new'
+    #  resource :doctor_specifications
+  
     
 
   root 'appointments#index'
 
     devise_for :users, controllers: {
       sessions: 'users/sessions',
-      registrations: "registrations"
+      
     }
 
     devise_scope :user do
@@ -20,4 +20,9 @@
       end
       match '/logout', :to => 'devise/session#destroy' , via: :all
     end
+    resources :appointments do
+      get :get_slots, on: :collection
+      resources :notes, except: [:show]
+    end
+
   end

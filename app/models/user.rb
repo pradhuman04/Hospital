@@ -52,9 +52,9 @@ class User < ApplicationRecord
     end
   end
 
-  # has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
+  has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
 
-  # has_many :appointments, dependent: :destroy
+    
  
 
   has_many :notes, dependent: :destroy
@@ -68,17 +68,10 @@ class User < ApplicationRecord
 
   scope :get_all_doctors, -> { (select('id, first_name').where('role = :user_role', user_role: User.roles[:doctor])) }
 
-
-
-  def past
-    where('status <> :pending', pending: Appointment.statuses[:pending]).order("date ASC")
-  end
-
-
   def future_appointments
     result = patient_appointments.future.includes(:patient) if doctor?
     result = doctor_appointments.future.includes(:doctor) if patient?
-  
+    result
   end
   def past_appointments
     result = patient_appointments.past.includes(:patient) if doctor?

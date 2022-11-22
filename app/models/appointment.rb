@@ -23,6 +23,8 @@ class Appointment < ApplicationRecord
     return Appointment.statuses[:unvisited]
   end
 
+  private
+  
   def validate_appoinment_date
     errors.add(:date, "please put a valid date")if date > Time.now
   end
