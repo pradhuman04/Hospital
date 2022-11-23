@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   
-  before_action :find_current_appointment, except: [:index]
+  before_action :find_current_appointment, except: [:index, :new, :create, :archive, :get_slots]
   load_and_authorize_resource
 
     def index

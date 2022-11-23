@@ -45,13 +45,8 @@ class User < ApplicationRecord
   end
 
   has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
-
   belongs_to :general_room, class_name: :"GeneralRoom", foreign_key: 'patient_id'
- 
-
   has_many :notes, dependent: :destroy
-
-
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -64,7 +59,7 @@ class User < ApplicationRecord
     
     result = patient_appointments.future.includes(:patient) if doctor?
     result = doctor_appointments.future.includes(:doctor) if patient?
-    
+    result
   end
   
 

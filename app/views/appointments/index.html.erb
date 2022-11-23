@@ -1,27 +1,45 @@
-<h1>Listing Appointments</h1>
- 
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
- 
-  <tbody>
-    <% @appointments.each do |appointment| %>
-      <tr>
-        <td><%= appointment.title %></td>
-        <td><%= appointment.content %></td>
-        <td><%= link_to "Show", appointment_path(appointment) %></td>
-        <td><%= link_to "Edit", edit_appointment_path(appointment) %></td>
-        <td><%= link_to "Destroy", appointment_path(appointment), method: :delete, data: { confirm: "Are you sure?" } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
- 
-<br>
+<h1 class="well">My Upcoming Appointments</h1>
+<% if @appointments.blank? %>
+  <p>No appointments found.</p>
+<% else %>
+  <div class="container-fluid well" id="container_top_index">
+    <div class="row">
+      <div class="col-sm-2">
+        <u>
+          <b>Date</b>
+        </u>
+      </div>
+      <div class="col-sm-2">
+        <u>
+          <b>Name</b>
+        </u>
+      </div>
+      <div class="col-sm-2">
+        <u>
+          <b>Status</b>
+        </u>
+      </div>
+      <% if current_user.patient? %>
+        <div class="col-sm-2">
+          <u>
+            <b>Actions</b>
+          </u>
+        </div>
+      <% end %>
+    </div>
+    <br/>
+  </div>
+<% end %>
+<div id="upcoming_appointments">
+  <% @appointments.each do |appointment| %>
+    
+  <% end %>
+</div>
+<div class="container">
+  <hr class="featurette-divider"/>
+  <div class="featurette" id="about">
+    <h2 class="featurette-heading"></h2>
+  </div>
+</div>
  
 
