@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20221121055514) do
+ActiveRecord::Schema.define(version: 20221123093832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "appointments", force: :cascade do |t|
-    t.datetime "date"
+    t.date     "date"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "doctor_id"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 20221121055514) do
     t.index ["user_id"], name: "index_notes_on_user_id", using: :btree
   end
 
+  create_table "rooms", force: :cascade do |t|
+    t.string   "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "time_slots", force: :cascade do |t|
     t.string   "slot"
     t.datetime "created_at", null: false
@@ -60,7 +66,7 @@ ActiveRecord::Schema.define(version: 20221121055514) do
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "gender"
-    t.datetime "date_of_birth"
+    t.date     "date_of_birth"
     t.integer  "role"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false

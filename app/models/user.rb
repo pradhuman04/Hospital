@@ -8,15 +8,15 @@ class User < ApplicationRecord
   NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  validates :first_name,
-  presence: true,
-  length: { minimum:2, maximum:15},
-  format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  # validates :first_name,
+  # presence: true,
+  # length: { minimum:2, maximum:15},
+  # format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
-  validates :last_name,
-    presence: true,
-    length: { minimum:2, maximum:15 },
-    format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  # validates :last_name,
+  #   presence: true,
+  #   length: { minimum:2, maximum:15 },
+  #   format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
   # validates :email,
   #           presence: true,
@@ -33,28 +33,20 @@ class User < ApplicationRecord
   has_many :patient_appointments, class_name: "Appointment", foreign_key: :doctor_id, dependent: :destroy do
     def future
       where('status = :pending OR status = :cancelled', pending: Appointment.statuses[:pending],
-                      cancelled: Appointment.statuses[:cancelled]).order("date ASC")
-    end
-    def past
-      where('status <> :pending', pending: Appointment.statuses[:pending]).order("date ASC")
+                      cancelled: Appointment.statuses[:cancelled])
     end
   end
-
-  
 
   has_many :doctor_appointments, class_name: "Appointment", foreign_key: :patient_id, dependent: :destroy do
     def future
       where('status = :pending OR status = :cancelled', pending: Appointment.statuses[:pending],
-                      cancelled: Appointment.statuses[:cancelled]).order("date ASC")
-    end
-    def past
-      where('status <> :pending', pending: Appointment.statuses[:pending]).order("date ASC")
+                      cancelled: Appointment.statuses[:cancelled])
     end
   end
 
   has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
 
-    
+  belongs_to :general_room, class_name: :"GeneralRoom", foreign_key: 'patient_id'
  
 
   has_many :notes, dependent: :destroy
@@ -68,16 +60,13 @@ class User < ApplicationRecord
 
   scope :get_all_doctors, -> { (select('id, first_name').where('role = :user_role', user_role: User.roles[:doctor])) }
 
-  def future_appointments
+  def future_appointments 
+    
     result = patient_appointments.future.includes(:patient) if doctor?
     result = doctor_appointments.future.includes(:doctor) if patient?
-    result
-  end
-  def past_appointments
-    result = patient_appointments.past.includes(:patient) if doctor?
-    result = doctor_appointments.past.includes(:doctor) if patient?
     
   end
+  
 
 
   private

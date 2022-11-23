@@ -17,10 +17,10 @@ class DoctorSpecification < ApplicationRecord
   presence: true,
   length: { minimum:2, maximum:40},
   
-
+  validates :birth_date, presence: true
 	validate  :validate_birth_date
     
-    # belongs_to :doctor, class_name: :"user", foreign_key: 'doctor_id'
+    belongs_to :doctor, class_name: :"User", foreign_key: 'doctor_id'
 
 
 		private

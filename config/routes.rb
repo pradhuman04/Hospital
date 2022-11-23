@@ -22,7 +22,9 @@
     end
     resources :appointments do
       get :get_slots, on: :collection
-      resources :notes, except: [:show]
+      resource :notes
     end
-
+    match 'appointments/:id/cancel_appointment' => "appointments#cancel_appointments", as: 'cancel_appointment', via: :post
+    
+    match 'appointments/:id/visited_patient_appointment' => "appointments#visited_patient_appointment", as: 'visited_patient_appointment', via: :post
   end
