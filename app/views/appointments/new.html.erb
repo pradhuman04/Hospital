@@ -1,28 +1,32 @@
-<%= form_for @appointment  do |form| %>
+<%= form_for(@appointment) do |f| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation">
+    <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
 
-	    <p>
-			<%= form.label :Choose_Doctor %><br>
-		  <% @all_doctor.each do |doctor| %>
-	 		<p> <%= doctor.first_name %> <%=link_to 'appointment'%>
-			<%end%>
-		</p>
-	
-		<p>
-			<%= form.label :SelectDate %><br>
-		 <%= form.date_field :date %>
-		</p>
-		<p>
-		<%= link_to "Get Slots", { action: :get_slots, controller: :appointments }, id: "time_slot"%>
-		</p>
-	
-		<p>
-			<%= form.submit %>
-		</p>
-	<% end %>
+    <ul>
+    <% @appointment.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+    </div>
+  <% end %>
 
+  <div class="field">
+    <%= f.label :time_slot %>
+    <%= f.collection_select :time_slot_id, @time_slots, :id, :slot %>
+  </div>
 
+  <div class="field">
+    <%= f.label :doctor %>
+    <%= f.collection_select :doctor_id, @doctors, :id, :first_name %>
+  </div>
 
+  <div class="field">
+    <%= f.label :date %>
+    <%= f.date_field :date %>
+  </div>
 
-
-
-
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

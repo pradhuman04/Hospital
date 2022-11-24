@@ -24,23 +24,12 @@ class User < ApplicationRecord
   # validates :password,
   #   presence:true,
   #   length: { minimum:6, maximum:20 }     
-    
   
   validate  :validate_birth_date
   
-  has_many :patient_appointments, class_name: "Appointment", foreign_key: :doctor_id, dependent: :destroy do
-    def future
-      where('status = :pending OR status = :cancelled', pending: Appointment.statuses[:pending],
-                      cancelled: Appointment.statuses[:cancelled])
-    end
-  end
-
-  has_many :doctor_appointments, class_name: "Appointment", foreign_key: :patient_id, dependent: :destroy do
-    def future
-      where('status = :pending OR status = :cancelled', pending: Appointment.statuses[:pending],
-                      cancelled: Appointment.statuses[:cancelled])
-    end
-  end
+  has_many :patient_appointments, class_name: "Appointment", foreign_key: :patient_id, dependent: :destroy
+  has_many :doctor_appointments, class_name: "Appointment", foreign_key: :doctor_id, dependent: :destroy
+  
 
   has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
   
@@ -53,14 +42,11 @@ class User < ApplicationRecord
 
   scope :get_all_doctors, -> { (select('id, first_name').where('role = :user_role', user_role: User.roles[:doctor])) }
 
-  def future_appointments 
-    
-    result = patient_appointments.future.includes(:patient) if doctor?
-    result = doctor_appointments.future.includes(:doctor) if patient?
-    result
-  end
-  
-
+  # def future_appointments 
+  #   result = patient_appointments.future.includes(:patient) if doctor?
+  #   result = doctor_appointments.future.includes(:doctor) if patient?
+  #   result
+  # end
 
   private
 

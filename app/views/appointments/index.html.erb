@@ -1,36 +1,54 @@
 <h1 class="well">My Upcoming Appointments</h1>
 
-<%= link_to 'New appointment ', new_appointment_path   %>
-<% if @appointments.blank? %>
-  <p>No appointments found.</p>
+<% if current_user.role == 'patient' %>
+  <%= link_to 'New appointment', new_appointment_path %><br>
+  <% if @appointments.blank? %>
+    <p>No appointments found.</p>
+  <% else %>
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Doctor</th>
+      <th colspan="2"> </th>
+    </tr>
+    <br>
+
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td><%= appointment.date %></td>
+        <td><%= appointment.status %></td>
+        <td><%= appointment.doctor.first_name %></td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Show', appointment_path(appointment) %></td>
+        <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+        <td><%= link_to 'Destroy', appointment_path(appointment), method: :delete,data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  <% end %>
 <% else %>
+	<% if @appointments.blank? %>
+		<p>No appointments found.</p>
+	<% else %>
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+      <th colspan="2"> </th>
+    </tr>
 
-<tr>
-  <th>Date</th>
-  <th>Status</th>
-  
-
-  <th colspan="2"> </th>
-</tr>
-
-<% @appointments.each do |appointment| %>
-  <tr>
-      <td><%= article.date %></td>
-      <td><%= article.status %></td>
-      
-  </tr>
-
-  
-  <tr>
-      <td><%= link_to 'Show', article_path(article) %></td>
-      <td><%= link_to 'Edit', edit_article_path(article) %></td>
-      <td><%= link_to 'Destroy', article_path(article),
-              method: :delete,
-      data: { confirm: 'Are you sure?' } %></td>
-   </tr>
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td><%= appointment.date %></td>
+        <td><%= appointment.status %></td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Show', appointment_path(appointment) %></td>
+        <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+        <td><%= link_to 'Destroy', appointment_path(appointment), method: :delete,data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  <% end %>
 <% end %>
-<% end %>
-
 </div>
  
 
