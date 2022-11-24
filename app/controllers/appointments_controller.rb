@@ -1,14 +1,15 @@
 class AppointmentsController < ApplicationController
   
-  before_action :find_current_appointment, except: [:index, :new, :create, :archive, :get_slots]
+  before_action :find_current_appointment, except: [:index, :new, :create, :get_slots]
   load_and_authorize_resource
 
     def index
       @appointments = current_user.future_appointments
+     
     end
     
     def new 
-      @action = 'new'
+      
       @appointment = Appointment.new
       @note = @appointment.notes.build({user_id: current_user.id})
       @all_doctor = User.get_all_doctors
@@ -17,7 +18,6 @@ class AppointmentsController < ApplicationController
     def get_slots
       @all_slots = Time_slot.pluck(:slot)
       booked_slot = Appointment.where(doctor_id: params["doctor"],date:params["date"].pluck(:time_slot_id))
-    
     end
     
     def create
@@ -36,14 +36,11 @@ class AppointmentsController < ApplicationController
     end
   
     def edit
-      
       @all_doctors = User.get_all_doctors
-      @slot = params["slot"]
-     
+      @slot = params["slot"]    
     end
   
-    def update
-      
+    def update      
       @appointment = Appointment.find(appoinments_params[:id])
       if @appointment.update(appoinments_params)
          redirect_to root_path, notice: 'Updated successfully!'

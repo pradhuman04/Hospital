@@ -1,45 +1,36 @@
 <h1 class="well">My Upcoming Appointments</h1>
+
+<%= link_to 'New appointment ', new_appointment_path   %>
 <% if @appointments.blank? %>
   <p>No appointments found.</p>
 <% else %>
-  <div class="container-fluid well" id="container_top_index">
-    <div class="row">
-      <div class="col-sm-2">
-        <u>
-          <b>Date</b>
-        </u>
-      </div>
-      <div class="col-sm-2">
-        <u>
-          <b>Name</b>
-        </u>
-      </div>
-      <div class="col-sm-2">
-        <u>
-          <b>Status</b>
-        </u>
-      </div>
-      <% if current_user.patient? %>
-        <div class="col-sm-2">
-          <u>
-            <b>Actions</b>
-          </u>
-        </div>
-      <% end %>
-    </div>
-    <br/>
-  </div>
+
+<tr>
+  <th>Date</th>
+  <th>Status</th>
+  
+
+  <th colspan="2"> </th>
+</tr>
+
+<% @appointments.each do |appointment| %>
+  <tr>
+      <td><%= article.date %></td>
+      <td><%= article.status %></td>
+      
+  </tr>
+
+  
+  <tr>
+      <td><%= link_to 'Show', article_path(article) %></td>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+      <td><%= link_to 'Destroy', article_path(article),
+              method: :delete,
+      data: { confirm: 'Are you sure?' } %></td>
+   </tr>
 <% end %>
-<div id="upcoming_appointments">
-  <% @appointments.each do |appointment| %>
-    
-  <% end %>
-</div>
-<div class="container">
-  <hr class="featurette-divider"/>
-  <div class="featurette" id="about">
-    <h2 class="featurette-heading"></h2>
-  </div>
+<% end %>
+
 </div>
  
 

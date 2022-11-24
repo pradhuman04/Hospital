@@ -1,0 +1,28 @@
+<%= form_for @appointment  do |form| %>
+
+	    <p>
+			<%= form.label :Choose_Doctor %><br>
+		  <% @all_doctor.each do |doctor| %>
+	 		<p> <%= doctor.first_name %> <%=link_to 'appointment'%>
+			<%end%>
+		</p>
+	
+		<p>
+			<%= form.label :SelectDate %><br>
+		 <%= form.date_field :date %>
+		</p>
+		<p>
+		<%= link_to "Get Slots", { action: :get_slots, controller: :appointments }, id: "time_slot"%>
+		</p>
+	
+		<p>
+			<%= form.submit %>
+		</p>
+	<% end %>
+
+
+
+
+
+
+

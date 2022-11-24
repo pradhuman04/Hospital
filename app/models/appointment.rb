@@ -1,6 +1,6 @@
 class Appointment < ApplicationRecord
-  validates :doctor_id, presence: true
-  validates :patient_id, presence: true
+  validates :doctor_id, presence: true, uniqueness: true
+  validates :patient_id, presence: true, uniqueness: true
   # validates :date, presence: true
 
   # validate  :validate_appoinment_date

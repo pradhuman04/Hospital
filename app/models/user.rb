@@ -1,10 +1,8 @@
 class User < ApplicationRecord
+
   enum role: [:patient, :doctor]
   enum gender: [:male, :female, :others]
-
-  # self.inheritance_column = :user_type
   
-
   NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
@@ -18,10 +16,10 @@ class User < ApplicationRecord
   #   length: { minimum:2, maximum:15 },
   #   format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
-  # validates :email,
-  #           presence: true,
-  #           uniqueness: true,
-  #           format: { with: EMAIL_REGEX, message: 'check e-mail format (abc123@example.com)' }
+    # validates :email,
+    #   presence: true,
+    #   uniqueness: true,
+    #   format: { with: EMAIL_REGEX, message: 'check e-mail format (abc123@example.com)' }
 
   # validates :password,
   #   presence:true,
@@ -45,7 +43,7 @@ class User < ApplicationRecord
   end
 
   has_many :doctor_specifications, class_name: "DoctorSpecification", foreign_key: :doctor_id, dependent: :destroy
-  belongs_to :general_room, class_name: :"GeneralRoom", foreign_key: 'patient_id'
+  
   has_many :notes, dependent: :destroy
 
   # Include default devise modules. Others available are:

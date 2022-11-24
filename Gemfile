@@ -9,7 +9,7 @@ gem 'execjs', '~> 2.2.2'
 gem 'devise'
 gem 'will_paginate'
 gem "cancan"
-gem 'rails-ujs', '~> 5.1.0.beta1'
+gem 'rails-ujs', '~> 5.1.0.beta1' 
 gem 'rubocop', require: false
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.7', '>= 5.0.7.2'

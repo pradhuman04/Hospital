@@ -1,3 +1,3 @@
 class GenralRoom < Room
 
-    has_many :patient, class_name: "User"
+    has_many :in_patients
