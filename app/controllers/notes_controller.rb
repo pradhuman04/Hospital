@@ -1,13 +1,16 @@
 class NotesController < ApplicationController
-  def create
-    @note = @appointment.notes.new(notes_params)
-    @note.user_id = current_user.id
-    if @note.save
-			redirect_to appointment_path(@appointment)
+
+	before_action :find_current_notes_appointment
+	
+	def create
+		@note = @appointment.notes.new(notes_params)
+		
+		if @note.save
+		 redirect_to appointment_path(@appointment)
 		else
 			redirect_to appointments_path(@appointment), notice: 'Unable to add note, try again!'
 		end
-  end
+	end
 	def edit
 		@note = @appointment.notes.find(params[:id])
 	end
@@ -30,5 +33,9 @@ class NotesController < ApplicationController
 	private
 	def notes_params
 		params.require(:note).permit(:description)
+	end
+
+	def find_current_notes_appointment
+	@appointment = Appointment.find(params[:appointment_id])
 	end
 end

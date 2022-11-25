@@ -13,10 +13,7 @@ class Appointment < ApplicationRecord
   belongs_to :time_slot
   has_many :notes, dependent: :destroy
 
-  def self.get_current_status(date)
-    return Appointment.statuses[:pending] if date > Time.now
-    return Appointment.statuses[:unvisited] if date > Time.now
-  end
+  
 
   private
   

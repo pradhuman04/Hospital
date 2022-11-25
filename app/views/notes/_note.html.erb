@@ -1,0 +1,15 @@
+<p>
+	<strong>Description:</strong>
+	<%= note.description %>
+</p>
+
+
+<p>
+
+<td><%= link_to 'edit note', edit_appointment_notes_path(note.appointment,note) %></td>
+</p>
+
+<p>
+<td><%= link_to 'Delete Comment',appointment_notes_path(note.appointment,note),
+                                 method: :delete, data: { confirm: 'Are you sure?' } %></td>
+</p>

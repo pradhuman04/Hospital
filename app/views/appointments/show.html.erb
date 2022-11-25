@@ -12,6 +12,11 @@
   <strong>Date:</strong>
   <%= @appointment.date %>
 </p>
+<h2>Notes</h2>																																																																					
+<%= render @appointment.notes %>
+ 
+<h2>Add a note:</h2>
+<%= render 'notes/form' %>
 
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |
 <%= link_to 'Back', appointments_path %>

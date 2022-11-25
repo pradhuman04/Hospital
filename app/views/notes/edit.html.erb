@@ -1,0 +1,13 @@
+<h1> edit comments</h1>
+
+<%= form_for [@note.appointment, @note]  do |form| %>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_field :description %>
+  </p>
+  
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+<%= link_to 'Back', appointments_path %>

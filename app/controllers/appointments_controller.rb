@@ -15,10 +15,6 @@ class AppointmentsController < ApplicationController
       @doctors = User.get_all_doctors
     end
   
-    def get_slots
-      @all_slots = Time_slot.pluck(:slot)
-      booked_slot = Appointment.where(doctor_id: params["doctor"],date:params["date"].pluck(:time_slot_id))
-    end
     
     def create
       @appointment = Appointment.new(appointments_params)
@@ -27,7 +23,7 @@ class AppointmentsController < ApplicationController
         if @appointment.save
           redirect_to appointment_path(@appointment), notice: 'Appointment saved!'
         else
-          redirect_to new_appointment_path #, notice: 'Unable to create Appointment, try again!'
+          render 'new' #, notice: 'Unable to create Appointment, try again!'
         end
       else
         redirect_to new_appointment_path 'new' #, notice: 'Appointment already taken'
@@ -36,6 +32,7 @@ class AppointmentsController < ApplicationController
   
     def edit
       @all_doctors = User.get_all_doctors
+      @time_slots = TimeSlot.all
       @slot = params["slot"]
     end
   
@@ -56,23 +53,6 @@ class AppointmentsController < ApplicationController
       @booked_time = TimeSlot.find_by('id = ?', @appointment.time_slot_id).slot 
     end
   
-    def cancel_appointment
-      @appointment.status = Appointment.statuses[:cancelled]
-      if @appointment.save
-        redirect_to appointments_path, notice: 'Appointment Cancelled!'
-      else
-        redirect_to root_path, notice: 'Unable to cancel, try again!'
-      end
-    end
-  
-    def visited_patient_appointment
-      @appointment.status = Appointment.statuses[:visited]
-      if @appointment.save
-        redirect_to appointments_path, notice: 'Appointment Visited!'
-      else
-        redirect_to root_path, notice: 'Unable to change status, try again!'
-      end
-    end
   
     private
 

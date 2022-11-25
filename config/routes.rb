@@ -21,10 +21,7 @@
       match '/logout', :to => 'devise/session#destroy' , via: :all
     end
     resources :appointments do
-      get :get_slots, on: :collection
-      resource :notes
+     resource :notes
     end
-    match 'appointments/:id/cancel_appointment' => "appointments#cancel_appointments", as: 'cancel_appointment', via: :post
-    
-    match 'appointments/:id/visited_patient_appointment' => "appointments#visited_patient_appointment", as: 'visited_patient_appointment', via: :post
+   
   end

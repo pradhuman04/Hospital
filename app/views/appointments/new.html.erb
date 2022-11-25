@@ -1,4 +1,4 @@
-<%= form_for(@appointment) do |f| %>
+<%= form_for @appointment do |f| %>
   <% if @appointment.errors.any? %>
     <div id="error_explanation">
     <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
@@ -11,22 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div >
     <%= f.label :time_slot %>
     <%= f.collection_select :time_slot_id, @time_slots, :id, :slot %>
   </div>
 
-  <div class="field">
+  <div >
     <%= f.label :doctor %>
     <%= f.collection_select :doctor_id, @doctors, :id, :first_name %>
   </div>
 
-  <div class="field">
+  <div >
     <%= f.label :date %>
     <%= f.date_field :date %>
   </div>
 
-  <div class="actions">
+  
+
+  <div >
     <%= f.submit %>
   </div>
 <% end %>
