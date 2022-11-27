@@ -15,6 +15,7 @@
 
     <% @appointments.each do |appointment| %>
       <tr>
+        <br>
         <td><%= appointment.date %></td>
         <td><%= appointment.status %></td>
         <td><%= appointment.doctor.first_name %></td>
@@ -33,10 +34,12 @@
     <tr>
       <th>Date</th>
       <th>Status</th>
+      <th>Name</th>
       <th colspan="2"> </th>
     </tr>
 
     <% @appointments.each do |appointment| %>
+      <br>
       <tr>
         <td><%= appointment.date %></td>
         <td><%= appointment.status %></td>

@@ -11,8 +11,9 @@ class NotesController < ApplicationController
 			redirect_to appointments_path(@appointment), notice: 'Unable to add note, try again!'
 		end
 	end
+
 	def edit
-		@note = @appointment.notes.find(params[:id])
+		@note = find_current_notes_appointment.note
 	end
 
 	def update
@@ -25,17 +26,21 @@ class NotesController < ApplicationController
 	end
 
 	def destroy
-		@note = @appointment.notes.find(params[:id])
-		@note.destroy
-		redirect_to appointment_path(@appointment), notice: 'Note destroyed!'
+		@note = find_current_notes_appointment.note
+		if @note.destroy
+		  redirect_to root_path, notice: 'Note destroyed!'
+    else
+      redirect_to @note
+    end
 	end
 
 	private
+
 	def notes_params
 		params.require(:note).permit(:description)
 	end
 
 	def find_current_notes_appointment
-	@appointment = Appointment.find(params[:appointment_id])
+	  @appointment = Appointment.find(params[:appointment_id])
 	end
 end

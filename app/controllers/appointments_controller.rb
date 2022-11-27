@@ -13,6 +13,7 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.new
       @time_slots = TimeSlot.all
       @doctors = User.get_all_doctors
+      @appointment.build_note
     end
   
     
@@ -23,10 +24,10 @@ class AppointmentsController < ApplicationController
         if @appointment.save
           redirect_to appointment_path(@appointment), notice: 'Appointment saved!'
         else
-          render 'new' #, notice: 'Unable to create Appointment, try again!'
+          redirect_to new_appointment_path #, notice: 'Unable to create Appointment, try again!'
         end
       else
-        redirect_to new_appointment_path 'new' #, notice: 'Appointment already taken'
+        redirect_to new_appointment_path #, notice: 'Appointment already taken'
       end
     end
   
@@ -48,16 +49,11 @@ class AppointmentsController < ApplicationController
     def destroy
       redirect_to root_path, notice: 'Appointment Deleted!' if @appointment.destroy
     end
-  
-    def show
-      @booked_time = TimeSlot.find_by('id = ?', @appointment.time_slot_id).slot 
-    end
-  
-  
     private
 
       def appointments_params
-        params.require(:appointment).permit(:date, :doctor_id, :patient_id, :time_slot_id, :status)
+        params.require(:appointment).permit(:date, :doctor_id, :patient_id, :time_slot_id, :status,
+        note_attributes: [:id, :description])
       end
 
       def find_current_appointment

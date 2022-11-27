@@ -3,13 +3,10 @@
 	<%= note.description %>
 </p>
 
-
 <p>
-
-<td><%= link_to 'edit note', edit_appointment_notes_path(note.appointment,note) %></td>
+  <td><%= link_to 'edit note', edit_appointment_note_path(appointment&.id) %></td>
 </p>
 
 <p>
-<td><%= link_to 'Delete Comment',appointment_notes_path(note.appointment,note),
-                                 method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <td><%= link_to 'Delete Comment',appointment_note_path(appointment.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 </p>

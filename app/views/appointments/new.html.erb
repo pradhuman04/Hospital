@@ -26,6 +26,12 @@
     <%= f.date_field :date %>
   </div>
 
+  <%= f.fields_for :note do |note_form| %>
+    <div >
+      <%= note_form.label :description %>
+      <%= note_form.text_field :description %>
+    </div>
+  <% end %>
   
 
   <div >

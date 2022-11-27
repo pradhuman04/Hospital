@@ -7,7 +7,6 @@ end
 
 gem 'execjs', '~> 2.2.2'
 gem 'devise'
-gem 'will_paginate'
 gem "cancan"
 gem 'rails-ujs', '~> 5.1.0.beta1' 
 gem 'rubocop', require: false
@@ -25,6 +24,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+
+gem 'activeadmin'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

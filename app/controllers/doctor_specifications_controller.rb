@@ -1,13 +1,13 @@
 class DoctorSpecificationsController < ApplicationController
-  skip_before_action :check_role, :only => [:new]
+  skip_before_action :check_role, :only => [:new, :create]
 
   def new
     @doctor_specification = DoctorSpecification.new
   end
 
   def create
-    @doctor_specification = DoctorSpecification.new(doctor_specification_params)
-    if @doctor_specificatio.save
+    @doctor_specification = current_user.doctor_specifications.new(doctor_specification_params)
+    if @doctor_specification.save
       redirect_to root_path
     else
       render 'new'

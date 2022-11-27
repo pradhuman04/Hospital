@@ -42,6 +42,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   scope :get_all_doctors, -> { (select('id, first_name').where('role = :user_role', user_role: User.roles[:doctor])) }
+  scope :get_all_patients, -> { (select('id, first_name').where('role = :user_role', user_role: User.roles[:patient])) }
 
 
   private
