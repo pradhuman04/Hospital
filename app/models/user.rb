@@ -6,24 +6,24 @@ class User < ApplicationRecord
   NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  # validates :first_name,
-  # presence: true,
-  # length: { minimum:2, maximum:15},
-  # format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  validates :first_name,
+  presence: true,
+  length: { minimum:2, maximum:15},
+  format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
-  # validates :last_name,
-  #   presence: true,
-  #   length: { minimum:2, maximum:15 },
-  #   format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  validates :last_name,
+    presence: true,
+    length: { minimum:2, maximum:15 },
+    format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
-    # validates :email,
-    #   presence: true,
-    #   uniqueness: true,
-    #   format: { with: EMAIL_REGEX, message: 'check e-mail format (abc123@example.com)' }
+    validates :email,
+      presence: true,
+      uniqueness: true,
+      format: { with: EMAIL_REGEX, message: 'check e-mail format (abc123@example.com)' }
 
-  # validates :password,
-  #   presence:true,
-  #   length: { minimum:6, maximum:20 }     
+  validates :password,
+    presence:true,
+    length: { minimum:6, maximum:20 }     
   
   validate  :validate_birth_date
   

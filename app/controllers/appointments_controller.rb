@@ -22,6 +22,7 @@ class AppointmentsController < ApplicationController
       @appointment.patient_id = current_user.id
       if check_available_appointment(appointments_params)
         if @appointment.save
+          UserMailer.welcome_email.deliver_now!
           redirect_to appointment_path(@appointment), notice: 'Appointment saved!'
         else
           redirect_to new_appointment_path #, notice: 'Unable to create Appointment, try again!'
@@ -30,6 +31,8 @@ class AppointmentsController < ApplicationController
         redirect_to new_appointment_path #, notice: 'Appointment already taken'
       end
     end
+
+    
   
     def edit
       @all_doctors = User.get_all_doctors
@@ -49,6 +52,8 @@ class AppointmentsController < ApplicationController
     def destroy
       redirect_to root_path, notice: 'Appointment Deleted!' if @appointment.destroy
     end
+
+
     private
 
       def appointments_params

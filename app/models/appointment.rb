@@ -1,6 +1,6 @@
 class Appointment < ApplicationRecord
 
-  
+
   validates :doctor_id, presence: true
   validates :patient_id, presence: true
   validates :date, presence: true
@@ -15,6 +15,7 @@ class Appointment < ApplicationRecord
   belongs_to :time_slot
   has_one :note, dependent: :destroy
   accepts_nested_attributes_for :note, allow_destroy: true
+
 
   private
   
