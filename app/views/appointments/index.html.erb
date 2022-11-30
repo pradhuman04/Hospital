@@ -28,6 +28,7 @@
     <% end %>
   <% end %>
 <% else %>
+<%= link_to 'Edit doctor_specification', edit_doctor_specification_path(current_user) %><br>
 	<% if @appointments.blank? %>
 		<p>No appointments found.</p>
 	<% else %>

@@ -9,7 +9,7 @@ class DoctorSpecification < ApplicationRecord
 
   validates :clinic_address, presence: true, length: { minimum: 2, maximum: 40 }
 
-  validates :practicing_from, presence: true
+  
   validate  :validate_practicing_from
 
   belongs_to :doctor, class_name: :User, foreign_key: 'doctor_id'

@@ -3,7 +3,6 @@ class NotesController < ApplicationController
 
   def create
     @note = @appointment.notes.new(notes_params)
-
     if @note.save
       redirect_to appointment_path(@appointment)
     else
