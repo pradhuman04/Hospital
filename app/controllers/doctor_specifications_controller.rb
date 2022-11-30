@@ -1,5 +1,5 @@
 class DoctorSpecificationsController < ApplicationController
-  skip_before_action :check_role, :only => [:new, :create]
+  skip_before_action :check_role, only: %i[new create]
 
   def new
     @doctor_specification = DoctorSpecification.new
@@ -15,8 +15,9 @@ class DoctorSpecificationsController < ApplicationController
   end
 
   private
-    def doctor_specification_params
-      params.require(:doctor_specification).permit(:specialization, :institute_name, :practicing_from, :clinic_address, :doctor_id)
-        
-    end
+
+  def doctor_specification_params
+    params.require(:doctor_specification).permit(:specialization, :institute_name, :practicing_from, :clinic_address,
+                                                 :doctor_id)
   end
+end

@@ -1,22 +1,24 @@
 class DoctorSpecification < ApplicationRecord
-  
-	NAME_REGEX = /\A[^0-9`!@#\$%\^&*+_=]+\z/
-   
-	validates :specialization, presence: true, length: { minimum: 2, maximum: 15}, format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  NAME_REGEX = /\A[^0-9`!@#$%\^&*+_=]+\z/
 
-	validates :institute_name, presence: true, length: { minimum:2, maximum:20}, format: { with: NAME_REGEX, message: 'only letters are allowed' }
+  validates :specialization, presence: true, length: { minimum: 2, maximum: 15 },
+                             format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
-	validates :clinic_address, presence: true, length: { minimum:2, maximum:40}
-  
-  validates :birth_date, presence: true
-	validate  :validate_birth_date
+  validates :institute_name, presence: true, length: { minimum: 2, maximum: 20 },
+                             format: { with: NAME_REGEX, message: 'only letters are allowed' }
 
-  belongs_to :doctor, class_name: :"User", foreign_key: 'doctor_id'
+  validates :clinic_address, presence: true, length: { minimum: 2, maximum: 40 }
 
-	private
+  validates :practicing_from, presence: true
+  validate  :validate_practicing_from
 
-  def validate_birth_date 
-    errors.add(:practicing_from, "please put a valid date") if practicing_from > Time.now
+  belongs_to :doctor, class_name: :User, foreign_key: 'doctor_id'
+
+  private
+
+  def validate_practicing_from
+    if practicing_from.present?
+    errors.add(:practicing_from, 'please put a valid date') if practicing_from > Time.now
+    end
   end
-	
 end

@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :find_current_appointment, except: [:index, :new, :create, :get_slots]
+  before_action :find_current_appointment, except: [:index, :new, :create]
 
   def index
     if current_user.role == 'patient'
@@ -22,7 +22,7 @@ class AppointmentsController < ApplicationController
       @appointment.patient_id = current_user.id
       if check_available_appointment(appointments_params)
         if @appointment.save
-          UserMailer.welcome_email.deliver_now!
+          # UserMailer.welcome_email.deliver_now!
           redirect_to appointment_path(@appointment), notice: 'Appointment saved!'
         else
           redirect_to new_appointment_path #, notice: 'Unable to create Appointment, try again!'
@@ -32,7 +32,6 @@ class AppointmentsController < ApplicationController
       end
     end
 
-    
   
     def edit
       @all_doctors = User.get_all_doctors
@@ -41,7 +40,7 @@ class AppointmentsController < ApplicationController
     end
   
     def update
-      @appointment = Appointment.find(params[:id])
+      
       if @appointment.update(appointments_params)
          redirect_to root_path, notice: 'Updated successfully!'
       else

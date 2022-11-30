@@ -8,13 +8,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-    params.require(:user).permit(:first_name,:last_name,:gender,:date_of_birth,:role,:email,:password,:password_confirmation,:type)
-  end
-  
-  def account_update_params
-    params.require(:user).permit(:first_name,:last_name,:gender,:date_of_birth,:role,:email,:password,:password_confirmation,:current_password, :image)
+    params.require(:user).permit(:first_name, :last_name, :gender, :date_of_birth, :role, :email, :password,
+                                 :password_confirmation, :type)
   end
 
+  def account_update_params
+    params.require(:user).permit(:first_name, :last_name, :gender, :date_of_birth, :role, :email, :password,
+                                 :password_confirmation, :current_password, :image)
+  end
 
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
@@ -27,7 +28,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   # def create
   #   super
-    
+
   # end
 
   # GET /resource/edit
@@ -54,7 +55,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
- 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
