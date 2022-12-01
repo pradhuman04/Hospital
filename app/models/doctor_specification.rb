@@ -18,7 +18,7 @@ class DoctorSpecification < ApplicationRecord
 
   def validate_practicing_from
     if practicing_from.present?
-    errors.add(:practicing_from, 'please put a valid date') if practicing_from > Time.now
-    end
+    errors.add(:practicing_from, 'please put a valid date') if practicing_from > Time.zone.now 
   end
+end
 end

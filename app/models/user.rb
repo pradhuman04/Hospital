@@ -46,7 +46,7 @@ class User < ApplicationRecord
 
   def validate_birth_date
     if date_of_birth.present?
-    errors.add(:date_of_birth, 'you must be 18 years old or above') if date_of_birth > Time.now - 18.years
+    errors.add(:date_of_birth, 'you must be 18 years old or above') if date_of_birth > Time.zone.now - 18.years
       end
   end
 end

@@ -21,7 +21,7 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.new(appointments_params)
       @appointment.patient_id = current_user.id
       if check_available_appointment(appointments_params)
-        if @appointment.save
+        if @appointment.save!
           # UserMailer.welcome_email.deliver_now!
           redirect_to appointment_path(@appointment), notice: 'Appointment saved!'
         else
@@ -41,7 +41,7 @@ class AppointmentsController < ApplicationController
   
     def update
       
-      if @appointment.update(appointments_params)
+      if @appointment.update!(appointments_params)
          redirect_to root_path, notice: 'Updated successfully!'
       else
         render 'edit', notice: 'Unable to save Appointment, Try again!'

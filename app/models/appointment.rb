@@ -17,7 +17,7 @@ class Appointment < ApplicationRecord
 
   def validate_appoinment_date
     if date.present?
-    errors[:date] << 'please put a valid date' if date < Time.now
+    errors[:date] << 'please put a valid date' if date < Time.zone.now 
     end
   end
 end

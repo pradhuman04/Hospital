@@ -3,7 +3,7 @@ class NotesController < ApplicationController
 
   def create
     @note = @appointment.notes.new(notes_params)
-    if @note.save
+    if @note.save!
       redirect_to appointment_path(@appointment)
     else
       redirect_to appointments_path(@appointment), notice: 'Unable to add note, try again!'
@@ -16,7 +16,7 @@ class NotesController < ApplicationController
 
   def update
     @note = @appointment.notes.find(params[:id])
-    if @note.update(notes_params)
+    if @note.update!(notes_params)
       redirect_to appointment_path(@appointment), notice: 'Updated Note'
     else
       render 'edit', notice: 'Sorry, Unable to update Note, Please try again!'
