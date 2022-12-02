@@ -1,0 +1,5 @@
+console.log('Binding event');
+$('.delete_apponintment').bind('ajax:success', function() {
+  console.log('fading the element: ', $(this).closest('tr')); 
+  $(this).closest('tr').fadeOut();
+});

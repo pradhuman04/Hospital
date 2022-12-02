@@ -1,5 +1,9 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"></p>
 
+<p>
+  <strong>Patient Name:</strong>
+  <%= @appointment.patient.first_name %>
+</p>
 <p>
   <strong>Time:</strong>
   <%= @appointment.time_slot.slot %>

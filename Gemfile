@@ -4,12 +4,12 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
-gem 'bootstrap-sass', '~> 3.2.0'
+# gem 'bootstrap', '~> 4.0.0'
 
 
 gem 'cancan'
 gem 'devise'
-gem 'execjs', '~> 2.2.2'
+# 'execjs', '~> 2.2.2'
 gem 'letter_opener', group: :development
 gem 'rails-ujs', '~> 5.1.0.beta1'
 gem 'rubocop', require: true
@@ -26,7 +26,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+#  gem 'mini_racer'
 
 gem 'activeadmin'
 

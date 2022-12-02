@@ -7,7 +7,7 @@ class DoctorSpecificationsController < ApplicationController
 
   def create
     @doctor_specification = current_user.doctor_specifications.new(doctor_specification_params)
-    if @doctor_specification.save!
+    if @doctor_specification.save
       redirect_to root_path
     else
       render 'new'
@@ -20,7 +20,7 @@ class DoctorSpecificationsController < ApplicationController
 
   def update
     @doctor_specification = DoctorSpecification.find(params[:id])
-    if @doctor_specification.update!(doctor_specification_params)
+    if @doctor_specification.update(doctor_specification_params)
       redirect_to root_path, notice: 'Updated successfully!'
     else
       render 'edit', notice: 'Unable to save doctor_specifications, Try again!'

@@ -16,7 +16,6 @@ class AppointmentsController < ApplicationController
       @appointment.build_note
     end
   
-    
     def create
       @appointment = Appointment.new(appointments_params)
       @appointment.patient_id = current_user.id
@@ -41,7 +40,7 @@ class AppointmentsController < ApplicationController
   
     def update
       
-      if @appointment.update!(appointments_params)
+      if @appointment.update(appointments_params)
          redirect_to root_path, notice: 'Updated successfully!'
       else
         render 'edit', notice: 'Unable to save Appointment, Try again!'
@@ -49,7 +48,12 @@ class AppointmentsController < ApplicationController
     end
   
     def destroy
-      redirect_to root_path, notice: 'Appointment Deleted!' if @appointment.destroy
+      @appointment.destroy
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.json { head :no_content }
+        format.js { render layout: false }
+      end
     end
 
 
